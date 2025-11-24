@@ -63,7 +63,7 @@ public class Program
     {
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("configV1.json", optional: false)
+            .AddJsonFile("config.json", optional: false)
             .Build();
 
         // Configuration Bindings
