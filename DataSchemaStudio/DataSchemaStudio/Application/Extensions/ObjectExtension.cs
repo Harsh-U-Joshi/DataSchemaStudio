@@ -1,24 +1,21 @@
 ﻿using DataSchemaStudio.Application.Common;
-using System.Text.RegularExpressions;
+using System.Net.NetworkInformation;
 
 namespace DataSchemaStudio.Application.Extensions;
 
 public static class ObjectExtensions
 {
-    public static string ApplyCasing(this string text, string? casing)
+    public static string ApplyCasing(this string text, NamingCase? casing)
     {
-        if (string.IsNullOrWhiteSpace(casing))
+        if (casing is null)
             return text;
 
-        return casing.ToLower() switch
-        {
-            "camelCase" => char.ToLower(text[0]) + text.Substring(1),
-            "pascalCase" => char.ToUpper(text[0]) + text.Substring(1),
-            "snakeCase" => Regex.Replace(text, "([a-z])([A-Z])", "$1_$2").ToLower(),
-            "upperCase" => text.ToUpper(),
-            "lowerCase" => text.ToLower(),
-            _ => text
-        };
+        if (casing.Value.ToString().ToLower() == NamingCase.CamelCase.ToString().ToLower())
+            return char.ToLower(text[0]) + text.Substring(1);
+        else if (casing.Value.ToString().ToLower() == NamingCase.PascalCase.ToString().ToLower())
+            return char.ToLower(text[0]) + text.Substring(1);
+        else
+            return text;
     }
 
     public static OperationParameterType Parse(this string code)

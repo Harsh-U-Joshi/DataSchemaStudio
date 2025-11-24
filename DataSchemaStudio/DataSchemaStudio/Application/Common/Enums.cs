@@ -44,3 +44,10 @@ public enum DbAuthType
     AzureAD = 2
 }
 
+public enum NamingCase
+{
+    None = 1,
+    CamelCase = 2,
+    PascalCase = 3
+}
+

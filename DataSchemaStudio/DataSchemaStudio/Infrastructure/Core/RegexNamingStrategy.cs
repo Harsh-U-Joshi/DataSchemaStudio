@@ -1,4 +1,5 @@
-﻿using DataSchemaStudio.Application.Extensions;
+﻿using DataSchemaStudio.Application.Common;
+using DataSchemaStudio.Application.Extensions;
 using DataSchemaStudio.Application.Interface;
 
 namespace DataSchemaStudio.Infrastructure.Core;
@@ -9,15 +10,15 @@ public class RegexNamingStrategy : INamingStrategy
 
     private readonly List<INamingRule> _propertyRules;
 
-    private readonly string _defaultEntityCasing;
+    private readonly NamingCase? _defaultEntityCasing;
 
-    private readonly string _defaultPropertyCasing;
+    private readonly NamingCase? _defaultPropertyCasing;
 
     public RegexNamingStrategy(
         IEnumerable<INamingRule> entityRules,
         IEnumerable<INamingRule> propertyRules,
-        string defaultEntityCasing,
-        string defaultPropertyCasing)
+        NamingCase? defaultEntityCasing,
+        NamingCase? defaultPropertyCasing)
     {
         _entityRules = entityRules.ToList();
         _propertyRules = propertyRules.ToList();
