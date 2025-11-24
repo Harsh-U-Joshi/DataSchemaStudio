@@ -1,0 +1,135 @@
+﻿{
+  "dbOption": {
+    "dbType": "<DbType>",
+    "connectionString": "<ConnectionString>",
+    "auth": {
+      "type": "AzureAD",
+      "options": {
+        "clientId": "",
+        "clientSecret": "",
+        "tenantId": ""
+      }
+    }
+  },
+  "codeGen": {
+    "specPath": "<FolderPath>",
+    "domainPath": "<FolderPath>",
+    "dtoPath": "<FolderPath>",
+    "template": "default"
+  },
+  "naming": {
+    "domain": {
+      "strategy": "regex",
+      "entityRules": [
+        {
+          "match": "^vw(.*)$",
+          "replace": "$1View"
+        }
+      ]
+    },
+    "dto": {
+      "strategy": "regex",
+      "entityRules": [
+        {
+          "match": "^vw(.*)$",
+          "replace": "$1Detail"
+        }
+      ],
+      "propertyRules": [
+        {
+          "match": "^vw(.*)$",
+          "replace": "$1Data"
+        },
+        {
+          "match": "EDH",
+          "replace": "Edh"
+        },
+        {
+          "match": "DOB",
+          "replace": "dob"
+        },
+        {
+          "match": "ID",
+          "replace": "Id"
+        }
+      ]
+    },
+    "spec": {
+      "strategy": "regex",
+      "entityRules": [
+        {
+          "match": "^vw(.*)$",
+          "replace": "$1Detail"
+        }
+
+      ],
+      "propertyRules": [
+        {
+          "match": "^vw(.*)$",
+          "replace": "$1Data"
+        },
+        {
+          "match": "EDH",
+          "replace": "Edh"
+        },
+        {
+          "match": "DOB",
+          "replace": "dob"
+        },
+        {
+          "match": "ID",
+          "replace": "Id"
+        }
+      ]
+    }
+  },
+  "operation": {
+    "method": "GET",
+    "uri": "/products/{productId}",
+    "path": {
+      "memberId": "i"
+    },
+    "query": {
+      "pageSize": "int",
+      "pageNumber": "int",
+      "lockBackDate": "dt"
+    },
+    "body": {
+      "memberId": "s",
+      "firstName": "s",
+      "lastName": "s",
+      "dateOfBirth": "d"
+    },
+    "responses": [ 200 ]
+  },
+  "data": {
+    "schema": "Sliver",
+    "entityName": "vwProduct",
+    "relationship": [
+      {
+        "schema": "Silver",
+        "entityName": "vwOrder",
+        "relationshipType": "OneToMany",
+        "relationship": [
+          {
+            "schema": "Silver",
+            "entityName": "vwPayment",
+            "relationshipType": "OneToOne",
+            "relationship": [
+              {
+                "schema": "Silver",
+                "entityName": "vwPaymentMode",
+                "relationshipType": "OneToOne"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "schema": "Silver",
+        "entityName": "vwCustomer",
+        "relationshipType": "OneToOne"
+      }
+    ]
+  }
+}
