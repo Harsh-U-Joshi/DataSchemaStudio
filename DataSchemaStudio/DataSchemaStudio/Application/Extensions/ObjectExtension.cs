@@ -1,82 +1,24 @@
 ﻿using DataSchemaStudio.Application.Common;
+using System.Text.RegularExpressions;
 
 namespace DataSchemaStudio.Application.Extensions;
 
 public static class ObjectExtensions
 {
-    public static string ToCamelCase(this string? columnName)
+    public static string ApplyCasing(this string text, string? casing)
     {
-        if (string.IsNullOrWhiteSpace(columnName))
-            return "N/A";
+        if (string.IsNullOrWhiteSpace(casing))
+            return text;
 
-        // Special case for EDH prefix
-        if (columnName.StartsWith("EDH"))
-            columnName = "edh" + columnName.Substring(3);
-
-        // Special case for EDH prefix
-        if (columnName.Contains("ID"))
-            columnName = columnName.Replace("ID", "Id");
-
-        // Capitalize only the first character
-        return char.ToLower(columnName[0]) + columnName.Substring(1);
-    }
-
-    public static string ToPascalCase(this string? columnName)
-    {
-        if (string.IsNullOrWhiteSpace(columnName))
-            return "N/A";
-
-        // Special case for EDH prefix
-        if (columnName.StartsWith("EDH"))
-            columnName = "Edh" + columnName.Substring(3);
-
-        // Special case for EDH prefix
-        if (columnName.Contains("ID"))
-            columnName = columnName.Replace("ID", "Id");
-
-        // Capitalize only the first character
-        return char.ToUpper(columnName[0]) + columnName.Substring(1);
-    }
-
-    public static string NormalizeDomainEntityName(this string? entityName)
-    {
-        string normalizedEntityName = string.Empty;
-
-        if (string.IsNullOrWhiteSpace(entityName))
-            return normalizedEntityName;
-
-        if (entityName.StartsWith("vw"))
-            normalizedEntityName = entityName.Replace("vw", string.Empty);
-
-        normalizedEntityName = normalizedEntityName + "View";
-
-        return normalizedEntityName;
-    }
-
-    public static string NormalizeResponseEntityName(this string? entityName)
-    {
-        string normalizedEntityName = string.Empty;
-
-        if (string.IsNullOrWhiteSpace(entityName))
-            return normalizedEntityName;
-
-        if (entityName.StartsWith("vw"))
-            normalizedEntityName = entityName.Replace("vw", string.Empty);
-
-        return normalizedEntityName + "Detail";
-    }
-
-    public static string NormalizeResponsePropertyName(this string? propertyName)
-    {
-        string normalizedEntityName = string.Empty;
-
-        if (string.IsNullOrWhiteSpace(propertyName))
-            return normalizedEntityName;
-
-        if (propertyName.StartsWith("vw"))
-            normalizedEntityName = propertyName.Replace("vw", string.Empty);
-
-        return normalizedEntityName;
+        return casing.ToLower() switch
+        {
+            "camelCase" => char.ToLower(text[0]) + text.Substring(1),
+            "pascalCase" => char.ToUpper(text[0]) + text.Substring(1),
+            "snakeCase" => Regex.Replace(text, "([a-z])([A-Z])", "$1_$2").ToLower(),
+            "upperCase" => text.ToUpper(),
+            "lowerCase" => text.ToLower(),
+            _ => text
+        };
     }
 
     public static OperationParameterType Parse(this string code)

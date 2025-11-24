@@ -22,7 +22,7 @@ public class NamingStrategyFactory : INamingStrategyFactory
                 .Select(r => new RegexNamingRule(r.Match, r.Replace))
                 ?? Enumerable.Empty<INamingRule>();
 
-            return new RegexNamingStrategy(entityRules, propertyRules);
+            return new RegexNamingStrategy(entityRules, propertyRules, section.DefaultEntityCasing, section.DefaultPropertyCasing);
         }
 
         // fallback

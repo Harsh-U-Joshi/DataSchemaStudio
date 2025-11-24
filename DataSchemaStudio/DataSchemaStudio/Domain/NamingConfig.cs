@@ -11,9 +11,11 @@ public class NamingConfig
 
 public class NamingLayerConfig
 {
-    public NamingStrategy Strategy { get; set; }  = NamingStrategy.None;
-    public List<NamingRules>? EntityRules { get; set; }                     
-    public List<NamingRules>? PropertyRules { get; set; }                     
+    public NamingStrategy Strategy { get; set; } = NamingStrategy.None;
+    public string? DefaultEntityCasing { get; set; }
+    public string? DefaultPropertyCasing { get; set; }
+    public List<NamingRules>? EntityRules { get; set; }
+    public List<NamingRules>? PropertyRules { get; set; }
 }
 
 public class NamingRules
