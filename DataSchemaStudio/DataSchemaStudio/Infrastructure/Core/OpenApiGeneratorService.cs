@@ -166,6 +166,7 @@ public class OpenApiGeneratorService : IOpenApiGeneratorService
         // Create schema
         var schema = new JsonSchema
         {
+            Title = pEntity,
             Type = JsonObjectType.Object,
             Description = AppConstants.UserInput
         };
